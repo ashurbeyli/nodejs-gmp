@@ -4,8 +4,12 @@
   "description": "NodeJS global mentoring program by EPAM",
   "main": "index.js",
   "scripts": {
+    "devserver": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jeyhun Ashurbayov",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.1"
+  }
 }
