@@ -13,11 +13,12 @@ const writeFunc = function(data) {
 };
 
 const dataHandler = function() {
-    let chunk;
-    while ((chunk = readFunc()) !== null) {
+    let chunk = '';
+    do {
         const data = reverseValue(chunk);
         writeFunc(data);
-    }
+        chunk = readFunc();
+    } while(chunk !== null)
 };
 
 process.stdin.on('readable', dataHandler);
