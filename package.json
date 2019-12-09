@@ -4,9 +4,9 @@
   "description": "NodeJS global mentoring program by EPAM",
   "main": "index.js",
   "scripts": {
-    "task1": "nodemon tasks/task1/task1_1.js",
-    "task2": "nodemon tasks/task1/task1_2.js",
-    "task2_es6": "npm run start tasks/task1/task1_2.es6.js",
+    "task1": "nodemon src/task1/task1_1.js",
+    "task2": "nodemon src/task1/task1_2.js",
+    "task2_es6": "npm run start src/task1/task1_2.es6.js",
     "start": "nodemon --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
