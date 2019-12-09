@@ -4,12 +4,21 @@
   "description": "NodeJS global mentoring program by EPAM",
   "main": "index.js",
   "scripts": {
-    "devserver": "nodemon index.js",
+    "task1": "nodemon src/task1/task1_1.js",
+    "task2": "nodemon src/task1/task1_2.js",
+    "task2_es6": "npm run start src/task1/task1_2.es6.js",
+    "start": "nodemon --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jeyhun Ashurbayov",
   "license": "ISC",
   "dependencies": {
+    "csvtojson": "^2.0.10",
     "nodemon": "^2.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.4"
   }
 }
