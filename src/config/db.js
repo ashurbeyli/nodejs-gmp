@@ -13,4 +13,4 @@ const failedSync = () => console.log(SEQUELIZE_SYNC_FAIL);
 sequelize.authenticate().then(successfullAuth).catch(failedAuth);
 sequelize.sync().then(successfullSync).catch(failedSync);
 
-module.exports = sequelize;
+export default sequelize;

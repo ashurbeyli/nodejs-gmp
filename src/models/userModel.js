@@ -20,4 +20,4 @@ const UserModel = db.define('users', {
     }
 });
 
-module.exports = UserModel;
+export default UserModel;

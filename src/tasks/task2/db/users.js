@@ -2,7 +2,7 @@ import uuid from 'uuid/v1';
 
 import UserEntity from '../entitites/User';
 import { deleteItemById, getItemsByPageAndLimit } from '../utils/commonUtils';
-import { USER_NOT_FOUND } from '../../core/constants';
+import { USER_NOT_FOUND } from '../../../core/constants';
 
 const users = [];
 

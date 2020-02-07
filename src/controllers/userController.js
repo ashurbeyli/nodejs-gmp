@@ -1,11 +1,11 @@
 import UserModel from '../models/userModel';
 import UserService from '../services/userService';
-import { PAGE_LIMIT } from '../config/global';
+import { DEFAULT_PAGE, PAGE_LIMIT } from '../config/global';
 
 const userService = new UserService(UserModel);
 
 const get = (req, res) => {
-    const { page = 0 } = req.params;
+    const { page = DEFAULT_PAGE } = req.params;
     return userService.getUsers(page, PAGE_LIMIT).then(data => res.json(data));
 };
 const getOne = (req, res) => userService.getUserById(req.params.id).then(user => res.json(user));
