@@ -1,4 +1,4 @@
-import UserModel from '../models/userModel';
+import { UserModel } from '../models/userModel';
 import UserService from '../services/userService';
 import { DEFAULT_PAGE, PAGE_LIMIT } from '../config/global';
 
