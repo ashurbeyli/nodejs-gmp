@@ -1,10 +1,10 @@
 import express from 'express';
 
-import { get } from '../controllers/mainController';
+import { healthCheck } from '../controllers/mainController';
 
 const router = express.Router();
 
 router.route('/')
-    .get(get);
+    .get(healthCheck);
 
 export default router;

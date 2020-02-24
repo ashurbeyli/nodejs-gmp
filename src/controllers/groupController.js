@@ -3,25 +3,46 @@ import { GroupModel } from '../models/groupModel';
 import { UserModel } from '../models/userModel';
 import { UserGroupModel } from '../models/userGroupModel';
 import GroupService from '../services/groupService';
+import { BAD_REQUEST } from 'http-status-codes';
 
 const groupService = new GroupService(GroupModel, UserModel, UserGroupModel);
 
-const get = (req, res) => {
+const getGroups = (req, res) => {
     const { page = DEFAULT_PAGE } = req.params;
-    return groupService.getGroups(page, PAGE_LIMIT).then(data => res.json(data));
+    return groupService
+        .getGroups(page, PAGE_LIMIT)
+        .then(data => res.json(data))
+        .catch(err => res.status(BAD_REQUEST).send(err));
 };
-const getOne = (req, res) => groupService.getGroupById(req.params.id).then(user => res.json(user));
-const post = (req, res) => {
+const getGroup = (req, res) => groupService
+    .getGroupById(req.params.id)
+    .then(user => res.json(user))
+    .catch(err => res.status(BAD_REQUEST).send(err));
+
+const createGroup = (req, res) => {
     const data = req.body;
-    return groupService.addGroup(data).then(user => res.json(user));
+    return groupService
+        .addGroup(data)
+        .then(user => res.json(user))
+        .catch(err => res.status(BAD_REQUEST).send(err));
 };
-const put = (req, res) => groupService.updateGroup(req.params.id, req.body).then(user => res.json(user));
-const remove = (req, res) => groupService.deleteGroup(req.params.id).then(user => res.json(user));
+const updateGroup = (req, res) => groupService
+    .updateGroup(req.params.id, req.body)
+    .then(user => res.json(user))
+    .catch(err => res.status(BAD_REQUEST).send(err));
+
+const removeGroup = (req, res) => groupService
+    .deleteGroup(req.params.id)
+    .then(user => res.json(user))
+    .catch(err => res.status(BAD_REQUEST).send(err));
 
 const addUsersToGroup = (req, res) => {
     const groupId = req.body.group_id;
     const userIds = req.body.user_ids;
-    return groupService.addUsersToGroup(groupId, userIds).then(group => res.json(group));
+    return groupService
+        .addUsersToGroup(groupId, userIds)
+        .then(group => res.json(group))
+        .catch(err => res.status(BAD_REQUEST).send(err));
 };
 
 const getGroupUsers = (req, res) => {
@@ -30,11 +51,11 @@ const getGroupUsers = (req, res) => {
 };
 
 export {
-    get,
-    getOne,
-    post,
-    put,
-    remove,
+    getGroups,
+    getGroup,
+    createGroup,
+    updateGroup,
+    removeGroup,
     addUsersToGroup,
     getGroupUsers
 };

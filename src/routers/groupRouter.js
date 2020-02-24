@@ -1,16 +1,16 @@
 import express from 'express';
 
-import { get, getOne, post, put, remove, addUsersToGroup, getGroupUsers } from '../controllers/groupController';
+import { getGroups, getGroup, createGroup, updateGroup, removeGroup, addUsersToGroup, getGroupUsers } from '../controllers/groupController';
 
 const router = express.Router();
 
 router.route('/')
-    .get(get)
-    .post(post);
+    .get(getGroups)
+    .post(createGroup);
 router.route('/:id')
-    .get(getOne)
-    .put(put)
-    .delete(remove);
+    .get(getGroup)
+    .put(updateGroup)
+    .delete(removeGroup);
 router.route('/:id/users')
     .get(getGroupUsers)
     .post(addUsersToGroup);
