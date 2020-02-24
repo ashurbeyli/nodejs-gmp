@@ -3,8 +3,10 @@ import Sequelize, { DataTypes } from 'sequelize';
 
 import db from '../config/db';
 
-const UserModel = db.define('users', {
-    id: {
+const userModelTableName = 'users';
+const userTableId = 'id';
+const UserModel = db.define(userModelTableName, {
+    [userTableId]: {
         type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
@@ -20,4 +22,9 @@ const UserModel = db.define('users', {
     }
 });
 
-export default UserModel;
+
+export  {
+    userTableId,
+    userModelTableName,
+    UserModel
+};
