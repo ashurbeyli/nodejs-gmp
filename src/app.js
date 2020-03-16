@@ -8,9 +8,9 @@ import { SERVER_PORT } from './config/global';
 import { APP_LISTENING_ON_PORT } from './core/constants';
 import { errorHandlerMiddleware } from './middlewares/errorHandlerMiddleware';
 import { apiLoggerMiddleware } from './middlewares/apiLoggerMiddleware';
-import { handleUncaughtException } from './core/utils/handleUncaughtException';
+import { handleErrorsOnProcess } from './core/utils/errorHandler.es6';
 
-handleUncaughtException();
+handleErrorsOnProcess();
 
 const app = express();
 app.use(bodyParser.urlencoded());

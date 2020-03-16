@@ -5,7 +5,7 @@ const uncaughtException = 'uncaughtException';
 const handleUncaughtException = () => process.on(uncaughtException,  (err) => {
     logger.log({
         level: 'error',
-        message: `uncaughtException: ${err.toString()}`,
+        message: `${uncaughtException}: ${err.toString()}`,
         stack: err.stack
     });
 });
