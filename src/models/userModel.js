@@ -16,6 +16,10 @@ const UserModel = db.define(userModelTableName, {
         type: Sequelize.STRING,
         allowNull: false
     },
+    password: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     isDeleted: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
