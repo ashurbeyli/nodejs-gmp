@@ -1,4 +1,5 @@
 import promiseFactory from '../core/utils/promiseFactory';
+import { hashPassword } from '../core/utils/passwordUtils';
 
 class UserService {
     constructor(userModel) {
@@ -12,12 +13,16 @@ class UserService {
         const promiseFn = this.model.findOne({ where: { id } });
         return promiseFactory(promiseFn);
     }
-    addUser(data) {
-        const promiseFn = this.model.create(data);
+    getUserByUsername(username) {
+        const promiseFn = this.model.findOne({ where: { username } });
         return promiseFactory(promiseFn);
     }
-    updateUser(id, data) {
-        const promiseFn = this.model.update({ ...data }, { where: { id } });
+    addUser({password, ...rest}) {
+        const promiseFn = this.model.create({ ...rest, password: hashPassword(password) });
+        return promiseFactory(promiseFn);
+    }
+    updateUser(id, { password, ...rest }) {
+        const promiseFn = this.model.update({ ...rest, password: hashPassword(password) }, { where: { id } });
         return promiseFactory(promiseFn);
     }
     deleteUser(id) {
