@@ -14,7 +14,7 @@ class GroupService {
         const promiseFn = this.model.findOne({ where: { id }, include: this.userGroupModel });
         return promiseFactory(promiseFn);
     }
-    addGroup(data) {
+    createGroup(data) {
         const promiseFn = this.model.create(data);
         return promiseFactory(promiseFn);
     }
