@@ -16,33 +16,33 @@ class UserController {
         const { page = DEFAULT_PAGE, limit = PAGE_LIMIT } = req.params;
         return this.userService
             .getUsers(page, limit)
-            .then(data => res.status(OK).json(data))
+            .then(data => res.status(OK).send(data))
             .catch(err => res.status(BAD_REQUEST).send(err));
     };
     getUserById(req, res) { 
         return this.userService
             .getUserById(req.params.id)
-            .then(data => res.status(OK).json(data))
+            .then(data => res.status(OK).send(data))
             .catch(err => res.status(BAD_REQUEST).send(err));
     }
     createUser(req, res) {
         const body = req.body;
         return this.userService
             .createUser(body)
-            .then(user => res.status(CREATED).json(user))
+            .then(user => res.status(CREATED).send(user))
             .catch(err => res.status(BAD_REQUEST).send(err));
     };
     updateUser(req, res) { 
         return this.userService
-        .updateUser(req.params.id, req.body)
-        .then(data => res.status(OK).json(data))
-        .catch(err => res.status(BAD_REQUEST).send(err));
+            .updateUser(req.params.id, req.body)
+            .then(data => res.status(OK).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
     }
     deleteUser(req, res) { 
         return this.userService
-        .deleteUser(req.params.id)
-        .then(data => res.status(OK).json(data))
-        .catch(err => res.status(BAD_REQUEST).send(err));
+            .deleteUser(req.params.id)
+            .then(data => res.status(OK).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
     }
 
 }

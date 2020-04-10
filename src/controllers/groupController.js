@@ -18,13 +18,13 @@ class GroupController {
         const { page = DEFAULT_PAGE } = req.params;
         return this.groupService
             .getGroups(page, PAGE_LIMIT)
-            .then(data => res.status(OK).json(data))
+            .then(data => res.status(OK).send(data))
             .catch(err => res.status(BAD_REQUEST).send(err));
     };
     getGroupById (req, res) { 
         return this.groupService
             .getGroupById(req.params.id)
-            .then(data => res.status(OK).json(data))
+            .then(data => res.status(OK).send(data))
             .catch(err => res.status(BAD_REQUEST).send(err));
     }
 
@@ -32,20 +32,20 @@ class GroupController {
         const body = req.body;
         return this.groupService
             .createGroup(body)
-            .then(data => res.status(CREATED).json(data))
+            .then(data => res.status(CREATED).send(data))
             .catch(err => res.status(BAD_REQUEST).send(err));
     };
     updateGroup (req, res) {
         return this.groupService
             .updateGroup(req.params.id, req.body)
-            .then(data => res.status(OK).json(data))
+            .then(data => res.status(OK).send(data))
             .catch(err => res.status(BAD_REQUEST).send(err));
     }
 
     deleteGroup (req, res) {
         return this.groupService
             .deleteGroup(req.params.id)
-            .then(data => res.status(OK).json(data))
+            .then(data => res.status(OK).send(data))
             .catch(err => res.status(BAD_REQUEST).send(err));
     }
 
@@ -54,7 +54,7 @@ class GroupController {
         const userIds = req.body.user_ids;
         return this.groupService
             .addUsersToGroup(groupId, userIds)
-            .then(data => res.status(OK).json(data))
+            .then(data => res.status(OK).send(data))
             .catch(err => res.status(BAD_REQUEST).send(err));
     };
 
@@ -62,7 +62,7 @@ class GroupController {
         const groupId = req.params.id;
         return this.groupService
             .getGroupUsers(groupId)
-            .then(data => res.status(OK).json(data))
+            .then(data => res.status(OK).send(data))
             .catch(err => res.status(BAD_REQUEST).send(err));
     };
 

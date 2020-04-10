@@ -8,6 +8,7 @@ jest.mock('../../services/groupService',);
 describe("groupController", () => {
     let groupService;
     let groupController;
+    let res;
 
     const group1 = Object.freeze({id: 1});
     const methods = [
@@ -22,20 +23,24 @@ describe("groupController", () => {
 
     methods.forEach(({ method, statusCode, resData}) => {
         describe(method, () => {
+
+            beforeEach(() => {
+                const mockResponse = () => {
+                    const res = {};
+                    res.status = jest.fn().mockReturnValue(res);
+                    res.send = jest.fn().mockReturnValue(res);
+                    return res;
+                };
+                res = mockResponse();
+            });
+
             it(`should return ${statusCode} status with data`, async () => {
                 groupService = new GroupService({}, {}, {});
                 groupService[method].mockImplementation(() => Promise.resolve(resData));
                 groupController = new GroupController(groupService);
-    
-                const mockResponse = () => {
-                    const res = {};
-                    res.status = jest.fn().mockReturnValue(res);
-                    res.json = jest.fn().mockReturnValue(res);
-                    return res;
-                };
-                const res = mockResponse();
                 await groupController[method]({ params: {}, body: {} }, res, null);
-                expect(res.json).toBeCalledWith(resData);
+
+                expect(res.send).toBeCalledWith(resData);
                 expect(res.status).toBeCalledWith(statusCode);
             });
     
@@ -44,15 +49,8 @@ describe("groupController", () => {
                 groupService = new GroupService({});
                 groupService[method].mockImplementation(() => Promise.reject(error));
                 groupController = new GroupController(groupService);
-    
-                const mockResponse = () => {
-                    const res = {};
-                    res.status = jest.fn().mockReturnValue(res);
-                    res.send = jest.fn().mockReturnValue(res);
-                    return res;
-                };
-                const res = mockResponse();
                 await groupController[method]({ params: {}, body: {} }, res, null);
+
                 expect(res.send).toBeCalledWith(error);
                 expect(res.status).toBeCalledWith(BAD_REQUEST);
             });

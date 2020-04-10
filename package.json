@@ -4,15 +4,11 @@
   "description": "NodeJS global mentoring program by EPAM",
   "main": "index.js",
   "scripts": {
-    "task1_1": "nodemon src/task1/task1_1.js",
-    "task1_2": "nodemon src/task1/task1_2.js",
-    "task1_2_es6": "npm run start src/task1/task1_2.es6.js",
-    "task2_1": "npm run start src/tasks/task2/task2_1.js",
-    "task3_1": "npm run start src/app.js",
-    "start-task": "nodemon --exec babel-node",
     "start": "nodemon --exec babel-node -r dotenv/config src/app.js",
-    "test": "NODE_ENV=test jest",
-    "test:watch": "NODE_ENV=test jest --watch"
+    "test": "NODE_ENV=test jest --config=jest.unit.config.js",
+    "test:watch": "NODE_ENV=test jest --watch --config=jest.unit.config.js",
+    "test:integration": "NODE_ENV=test jest --config=jest.integration.config.js integration-tests/**/",
+    "test:integration:watch": "NODE_ENV=test jest --config=jest.integration.config.js --watch integration-tests/**/"
   },
   "author": "Jeyhun Ashurbayov",
   "license": "ISC",
@@ -38,6 +34,7 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^25.2.4",
     "eslint": "^6.7.2",
-    "jest": "^25.2.4"
+    "jest": "^25.2.4",
+    "sequelize-mock": "^0.10.2"
   }
 }
