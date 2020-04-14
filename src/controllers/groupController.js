@@ -1,61 +1,71 @@
+import { BAD_REQUEST, OK, CREATED } from 'http-status-codes';
+
 import { DEFAULT_PAGE, PAGE_LIMIT } from '../config/global';
-import { GroupModel } from '../models/groupModel';
-import { UserModel } from '../models/userModel';
-import { UserGroupModel } from '../models/userGroupModel';
-import GroupService from '../services/groupService';
-import { BAD_REQUEST } from 'http-status-codes';
 
-const groupService = new GroupService(GroupModel, UserModel, UserGroupModel);
+class GroupController {
+    constructor(groupService) {
+        this.groupService = groupService;
+        this.getGroups = this.getGroups.bind(this);
+        this.getGroupById = this.getGroupById.bind(this);
+        this.createGroup = this.createGroup.bind(this);
+        this.updateGroup = this.updateGroup.bind(this);
+        this.deleteGroup = this.deleteGroup.bind(this);
+        this.addUsersToGroup = this.addUsersToGroup.bind(this);
+        this.getGroupUsers = this.getGroupUsers.bind(this);
+    }
 
-const getGroups = (req, res) => {
-    const { page = DEFAULT_PAGE } = req.params;
-    return groupService
-        .getGroups(page, PAGE_LIMIT)
-        .then(data => res.json(data))
-        .catch(err => res.status(BAD_REQUEST).send(err));
-};
-const getGroup = (req, res) => groupService
-    .getGroupById(req.params.id)
-    .then(user => res.json(user))
-    .catch(err => res.status(BAD_REQUEST).send(err));
+    getGroups (req, res)  {
+        const { page = DEFAULT_PAGE } = req.params;
+        return this.groupService
+            .getGroups(page, PAGE_LIMIT)
+            .then(data => res.status(OK).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
+    };
+    getGroupById (req, res) { 
+        return this.groupService
+            .getGroupById(req.params.id)
+            .then(data => res.status(OK).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
+    }
 
-const createGroup = (req, res) => {
-    const data = req.body;
-    return groupService
-        .addGroup(data)
-        .then(user => res.json(user))
-        .catch(err => res.status(BAD_REQUEST).send(err));
-};
-const updateGroup = (req, res) => groupService
-    .updateGroup(req.params.id, req.body)
-    .then(user => res.json(user))
-    .catch(err => res.status(BAD_REQUEST).send(err));
+    createGroup (req, res) {
+        const body = req.body;
+        return this.groupService
+            .createGroup(body)
+            .then(data => res.status(CREATED).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
+    };
+    updateGroup (req, res) {
+        return this.groupService
+            .updateGroup(req.params.id, req.body)
+            .then(data => res.status(OK).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
+    }
 
-const removeGroup = (req, res) => groupService
-    .deleteGroup(req.params.id)
-    .then(user => res.json(user))
-    .catch(err => res.status(BAD_REQUEST).send(err));
+    deleteGroup (req, res) {
+        return this.groupService
+            .deleteGroup(req.params.id)
+            .then(data => res.status(OK).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
+    }
 
-const addUsersToGroup = (req, res) => {
-    const groupId = req.body.group_id;
-    const userIds = req.body.user_ids;
-    return groupService
-        .addUsersToGroup(groupId, userIds)
-        .then(group => res.json(group))
-        .catch(err => res.status(BAD_REQUEST).send(err));
-};
+    addUsersToGroup (req, res)  {
+        const groupId = req.body.group_id;
+        const userIds = req.body.user_ids;
+        return this.groupService
+            .addUsersToGroup(groupId, userIds)
+            .then(data => res.status(OK).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
+    };
 
-const getGroupUsers = (req, res) => {
-    const groupId = req.params.id;
-    return groupService.getGroupUsers(groupId).then(group => res.json(group));
-};
+    getGroupUsers (req, res)  {
+        const groupId = req.params.id;
+        return this.groupService
+            .getGroupUsers(groupId)
+            .then(data => res.status(OK).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
+    };
 
-export {
-    getGroups,
-    getGroup,
-    createGroup,
-    updateGroup,
-    removeGroup,
-    addUsersToGroup,
-    getGroupUsers
-};
+}
+
+export default GroupController;

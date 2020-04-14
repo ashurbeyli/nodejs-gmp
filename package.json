@@ -4,20 +4,18 @@
   "description": "NodeJS global mentoring program by EPAM",
   "main": "index.js",
   "scripts": {
-    "task1_1": "nodemon src/task1/task1_1.js",
-    "task1_2": "nodemon src/task1/task1_2.js",
-    "task1_2_es6": "npm run start src/task1/task1_2.es6.js",
-    "task2_1": "npm run start src/tasks/task2/task2_1.js",
-    "task3_1": "npm run start src/app.js",
-    "start-task": "nodemon --exec babel-node",
-    "start": "nodemon --exec babel-node src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --exec babel-node -r dotenv/config src/app.js",
+    "test": "NODE_ENV=test jest --config=jest.unit.config.js",
+    "test:watch": "NODE_ENV=test jest --watch --config=jest.unit.config.js",
+    "test:integration": "NODE_ENV=test jest --config=jest.integration.config.js integration-tests/**/",
+    "test:integration:watch": "NODE_ENV=test jest --config=jest.integration.config.js --watch integration-tests/**/"
   },
   "author": "Jeyhun Ashurbayov",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
     "csvtojson": "^2.0.10",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-status-codes": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
@@ -30,10 +28,13 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.4",
+    "@babel/core": "^7.9.0",
     "@babel/node": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-env": "^7.9.0",
     "babel-eslint": "^10.0.3",
-    "eslint": "^6.7.2"
+    "babel-jest": "^25.2.4",
+    "eslint": "^6.7.2",
+    "jest": "^25.2.4",
+    "sequelize-mock": "^0.10.2"
   }
 }

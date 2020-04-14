@@ -17,7 +17,7 @@ class UserService {
         const promiseFn = this.model.findOne({ where: { username } });
         return promiseFactory(promiseFn);
     }
-    addUser({password, ...rest}) {
+    createUser({password, ...rest}) {
         const promiseFn = this.model.create({ ...rest, password: hashPassword(password) });
         return promiseFactory(promiseFn);
     }

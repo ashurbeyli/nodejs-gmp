@@ -1,42 +1,50 @@
-import { BAD_REQUEST } from 'http-status-codes';
+import { BAD_REQUEST, OK, CREATED } from 'http-status-codes';
 
-import { UserModel } from '../models/userModel';
-import UserService from '../services/userService';
 import { DEFAULT_PAGE, PAGE_LIMIT } from '../config/global';
 
-const userService = new UserService(UserModel);
+class UserController {
+    constructor(userService) {
+        this.userService = userService;
+        this.getUsers = this.getUsers.bind(this);
+        this.getUser = this.getUserById.bind(this);
+        this.createUser = this.createUser.bind(this);
+        this.updateUser = this.updateUser.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
+    }
 
-const getUsers = (req, res) => {
-    const { page = DEFAULT_PAGE } = req.params;
-    return userService
-        .getUsers(page, PAGE_LIMIT)
-        .then(data => res.json(data))
-        .catch(err => res.status(BAD_REQUEST).send(err));
-};
-const getUser = (req, res) => userService
-    .getUserById(req.params.id)
-    .then(user => res.json(user))
-    .catch(err => res.status(BAD_REQUEST).send(err));
-const createUser = (req, res) => {
-    const data = req.body;
-    return userService
-        .addUser(data)
-        .then(user => res.json(user))
-        .catch(err => res.status(BAD_REQUEST).send(err));
-};
-const updateUser = (req, res) => userService
-    .updateUser(req.params.id, req.body)
-    .then(user => res.json(user))
-    .catch(err => res.status(BAD_REQUEST).send(err));
-const removeUser = (req, res) => userService
-    .deleteUser(req.params.id)
-    .then(user => res.json(user))
-    .catch(err => res.status(BAD_REQUEST).send(err));
+    getUsers(req, res) {
+        const { page = DEFAULT_PAGE, limit = PAGE_LIMIT } = req.params;
+        return this.userService
+            .getUsers(page, limit)
+            .then(data => res.status(OK).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
+    };
+    getUserById(req, res) { 
+        return this.userService
+            .getUserById(req.params.id)
+            .then(data => res.status(OK).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
+    }
+    createUser(req, res) {
+        const body = req.body;
+        return this.userService
+            .createUser(body)
+            .then(user => res.status(CREATED).send(user))
+            .catch(err => res.status(BAD_REQUEST).send(err));
+    };
+    updateUser(req, res) { 
+        return this.userService
+            .updateUser(req.params.id, req.body)
+            .then(data => res.status(OK).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
+    }
+    deleteUser(req, res) { 
+        return this.userService
+            .deleteUser(req.params.id)
+            .then(data => res.status(OK).send(data))
+            .catch(err => res.status(BAD_REQUEST).send(err));
+    }
 
-export {
-    getUsers,
-    getUser,
-    createUser,
-    updateUser,
-    removeUser
-};
+}
+
+export default UserController;
